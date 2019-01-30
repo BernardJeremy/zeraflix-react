@@ -1,27 +1,51 @@
 import React from 'react';
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 
-import { updateVideosList } from './actions';
+import VideoThumbnail from '../../components/VideoThumbnail/VideoThumbnail';
 
-const PUBLIC_MARVEL_API_KEY = process.env.REACT_APP_TWITCH_CLIENT_ID;  
+import { updateVideosList } from '../../actions/VideosList';
+
+const TWITCH_CLIENT_ID = process.env.REACT_APP_TWITCH_CLIENT_ID;
 
 class VideosList extends React.Component {
-   componentDidMount() {
-    fetch(`https://gateway.marvel.com/v1/public/characters?apikey=${PUBLIC_MARVEL_API_KEY}&limit=40`)
+  componentDidMount() {
+    const twitchApiRequest = new Request(`https://api.twitch.tv/kraken/channels/${this.props.twitchChannel}/videos?limit=12&offset=0&broadcast_type=archive&sort=time`, {
+      headers: new Headers({
+        'client-id': TWITCH_CLIENT_ID,
+      }),
+    });
+    fetch(twitchApiRequest)
       .then(res => res.json())
       .then(
         (result) => {
-          this.props.onVideosListUpdate(result.data.results);
+          this.props.onVideosListUpdate(result.videos);
         },
         (error) => {
           // TODO
         }
-      )
+      );
   }
 
   render() {
-    return;
+    return (
+      <section className="content">
+        <section className="part">
+          {
+            this.props.videosArray.map((video, i) => {
+              return <VideoThumbnail
+                videoUrl={video.url}
+                videoPreview={video.preview}
+                videoLabel={video.title}
+                videoDate={video.recorded_at}
+                videoDuration={video.length}
+                key={i}
+              />
+            })
+          }
+        </section>
+      </section>
+    )
   }
 }
 
@@ -40,6 +64,8 @@ const mapDispatchToProps = dispatch => {
 }
 
 VideosList.propTypes = {
+  videosArray: PropTypes.array.isRequired,
+  twitchChannel: PropTypes.string.isRequired,
 }
 
 const VideosListContainer = connect(

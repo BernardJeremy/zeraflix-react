@@ -1,6 +1,6 @@
 import {
   UPDATE_VIDEOS_LIST,
-} from '../containers/HeroesList/actions'
+} from '../actions/VideosList'
 
 export default function videosList(state = {videosArray: []}, action) {
   switch (action.type) {
