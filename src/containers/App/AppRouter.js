@@ -5,7 +5,7 @@ import VideosList from '../VideosList/VideosList';
 
 const AppRouter = () => (
   <Switch>
-    <Route path="*" exact render={() => <VideosList twitchChannel='zerator' />} />
+    <Route path="*" exact component={VideosList} />
   </Switch>
 );
 

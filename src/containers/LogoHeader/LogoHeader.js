@@ -1,17 +1,64 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 
-import VerticalLogoHeader from '../../components/VerticalLogoHeader/VerticalLogoHeader';
-import LogoImg from '../../images/zera-logo.png';
 
-const LogoHeader = () => (
-  <div className="sidebar">
-    <header>
-      <div className="logo">
-        <VerticalLogoHeader logoSrc={LogoImg} logoAltText="Zeraflix" />
+import { updateChannelData } from '../../actions/VideosList';
+import TwitchApi from '../../webservices/Twitch';
+
+class LogoHeader extends React.Component {
+  componentDidMount() {
+    TwitchApi.getChannelData(this.props.currentTwitchChannel.name)
+      .then(
+        (result) => {
+          this.props.onChannelDataUpdate(result || {});
+        },
+        (error) => {
+          // TODO
+        }
+      );
+  }
+
+  render() {
+    return (
+      <div className="sidebar">
+        <header>
+          <div className="logo">
+            {(() => {
+              if (this.props.currentTwitchChannel.data.logo) {
+                return <img src={this.props.currentTwitchChannel.data.logo} alt='Zeraflix' />;
+              }
+            })()}
+          </div>
+          <div className="clearFloat"></div>
+        </header>
       </div>
-      <div className="clearFloat"></div>
-    </header>
-  </div>
-);
+    )
+  }
+}
 
-export default LogoHeader; 
+const mapStateToProps = state => {
+  return {
+    currentTwitchChannel: state.videosList.currentTwitchChannel,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onChannelDataUpdate: channelData => {
+      dispatch(updateChannelData(channelData))
+    }
+  }
+}
+
+LogoHeader.propTypes = {
+  currentTwitchChannel: PropTypes.object.isRequired,
+}
+
+const LogoHeaderContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LogoHeader)
+
+
+export default LogoHeaderContainer; 
