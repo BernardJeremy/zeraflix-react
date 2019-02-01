@@ -5,26 +5,21 @@ import { connect } from 'react-redux'
 import VideoThumbnail from '../../components/VideoThumbnail/VideoThumbnail';
 
 import { updateVideosList } from '../../actions/VideosList';
+import formatVideoData from '../../tools/formatVideoData';
+import TwitchApi from '../../webservices/Twitch';
 
-const TWITCH_CLIENT_ID = process.env.REACT_APP_TWITCH_CLIENT_ID;
 
 class VideosList extends React.Component {
   componentDidMount() {
-    const twitchApiRequest = new Request(`https://api.twitch.tv/kraken/channels/${this.props.twitchChannel}/videos?limit=12&offset=0&broadcast_type=archive&sort=time`, {
-      headers: new Headers({
-        'client-id': TWITCH_CLIENT_ID,
-      }),
-    });
-    fetch(twitchApiRequest)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.props.onVideosListUpdate(result.videos);
-        },
-        (error) => {
-          // TODO
-        }
-      );
+    TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.name)
+    .then(
+      (result) => {
+        this.props.onVideosListUpdate(result.videos || []);
+      },
+      (error) => {
+        // TODO
+      }
+    );
   }
 
   render() {
@@ -33,12 +28,13 @@ class VideosList extends React.Component {
         <section className="part">
           {
             this.props.videosArray.map((video, i) => {
+              const formatedVideo = formatVideoData(video);
               return <VideoThumbnail
-                videoUrl={video.url}
-                videoPreview={video.preview}
-                videoLabel={video.title}
-                videoDate={video.recorded_at}
-                videoDuration={video.length}
+                videoUrl={formatedVideo.url}
+                videoPreview={formatedVideo.preview}
+                videoLabel={formatedVideo.title}
+                videoDate={formatedVideo.recorded_at}
+                videoDuration={formatedVideo.length}
                 key={i}
               />
             })
@@ -52,6 +48,7 @@ class VideosList extends React.Component {
 const mapStateToProps = state => {
   return {
     videosArray: state.videosList.videosArray,
+    currentTwitchChannel: state.videosList.currentTwitchChannel,
   }
 }
 
@@ -65,7 +62,7 @@ const mapDispatchToProps = dispatch => {
 
 VideosList.propTypes = {
   videosArray: PropTypes.array.isRequired,
-  twitchChannel: PropTypes.string.isRequired,
+  currentTwitchChannel: PropTypes.object.isRequired,
 }
 
 const VideosListContainer = connect(

@@ -19,7 +19,7 @@ VideoThumbnail.propTypes = {
   videoPreview: PropTypes.string.isRequired,
   videoLabel: PropTypes.string.isRequired,
   videoDate: PropTypes.string.isRequired,
-  videoDuration: PropTypes.number.isRequired,
+  videoDuration: PropTypes.string.isRequired,
 };
 
 export default VideoThumbnail; 
