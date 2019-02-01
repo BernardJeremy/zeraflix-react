@@ -12,20 +12,21 @@ import TwitchApi from '../../webservices/Twitch';
 class VideosList extends React.Component {
   componentDidMount() {
     TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.name)
-    .then(
-      (result) => {
-        this.props.onVideosListUpdate(result.videos || []);
-      },
-      (error) => {
-        // TODO
-      }
-    );
+      .then(
+        (result) => {
+          this.props.onVideosListUpdate(result.videos || []);
+        },
+        (error) => {
+          // TODO
+        }
+      );
   }
 
   render() {
     return (
       <section className="content">
         <section className="part">
+          <h2>Zeraflix ({this.props.currentTwitchChannel.name})</h2>
           {
             this.props.videosArray.map((video, i) => {
               const formatedVideo = formatVideoData(video);
