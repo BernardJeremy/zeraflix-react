@@ -9,7 +9,7 @@ import { toggleDetailsModal } from '../../actions/DetailsModal';
 
 import formatVideoData from '../../tools/formatVideoData';
 import TwitchApi from '../../webservices/Twitch';
-import Modal from '../../components/Modal/Modal';
+import DetailsModal from '../DetailsModal/DetailsModal';
 
 
 class VideosList extends React.Component {
@@ -23,6 +23,10 @@ class VideosList extends React.Component {
           // TODO
         }
       );
+  }
+
+  getDetailsModalDisplayer(videoUrl) {
+    return () => this.props.toggleModal(videoUrl);
   }
 
   render() {
@@ -39,15 +43,19 @@ class VideosList extends React.Component {
                 videoLabel={formatedVideo.title}
                 videoDate={formatedVideo.recorded_at}
                 videoDuration={formatedVideo.length}
-                onClickTumbnail={this.props.toggleModal}
+                onClickTumbnail={this.getDetailsModalDisplayer(formatedVideo.url)}
                 key={i}
               />
             })
           }
         </section>
-        <Modal open={this.props.isDetailsModalOpen} onClose={this.props.toggleModal}>
-          Details HERE !
-        </Modal>
+        {(() => {
+          if (this.props.isDetailsModalOpen) {
+            return (
+              <DetailsModal open={this.props.isDetailsModalOpen} onClose={this.props.toggleModal} />
+            )
+          }
+        })()}
       </section>
     )
   }
@@ -66,8 +74,8 @@ const mapDispatchToProps = dispatch => {
     onVideosListUpdate: videosData => {
       dispatch(updateVideosList(videosData));
     },
-    toggleModal: () => {
-      dispatch(toggleDetailsModal());
+    toggleModal: targetVideoUrl => {
+      dispatch(toggleDetailsModal(targetVideoUrl));
     }
   }
 }
