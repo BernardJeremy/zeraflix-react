@@ -159,6 +159,9 @@ header{
 	text-decoration:underline;
 	color:#464646;
 }
+.video-link {
+	text-align: center;
+}
 .go,
 .icon{
 	display:inline-block;
