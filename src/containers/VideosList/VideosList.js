@@ -5,8 +5,11 @@ import { connect } from 'react-redux'
 import VideoThumbnail from '../../components/VideoThumbnail/VideoThumbnail';
 
 import { updateVideosList } from '../../actions/VideosList';
+import { toggleDetailsModal } from '../../actions/DetailsModal';
+
 import formatVideoData from '../../tools/formatVideoData';
 import TwitchApi from '../../webservices/Twitch';
+import Modal from '../../components/Modal/Modal';
 
 
 class VideosList extends React.Component {
@@ -36,11 +39,15 @@ class VideosList extends React.Component {
                 videoLabel={formatedVideo.title}
                 videoDate={formatedVideo.recorded_at}
                 videoDuration={formatedVideo.length}
+                onClickTumbnail={this.props.toggleModal}
                 key={i}
               />
             })
           }
         </section>
+        <Modal open={this.props.isDetailsModalOpen} onClose={this.props.toggleModal}>
+          Details HERE !
+        </Modal>
       </section>
     )
   }
@@ -50,13 +57,17 @@ const mapStateToProps = state => {
   return {
     videosArray: state.videosList.videosArray,
     currentTwitchChannel: state.videosList.currentTwitchChannel,
+    isDetailsModalOpen: state.detailsModal.isModalOpen,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     onVideosListUpdate: videosData => {
-      dispatch(updateVideosList(videosData))
+      dispatch(updateVideosList(videosData));
+    },
+    toggleModal: () => {
+      dispatch(toggleDetailsModal());
     }
   }
 }

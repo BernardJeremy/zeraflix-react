@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const VideoThumbnail = (props) => (
-  <div className="grid">
+  <div className="grid" onClick={props.onClickTumbnail}>
     <div className="preview">
       <a href={'#' + props.videoUrl}><img src={props.videoPreview} alt={props.videoLabel} /></a>
       <div className="time">{props.videoDate}</div>
@@ -20,6 +20,7 @@ VideoThumbnail.propTypes = {
   videoLabel: PropTypes.string.isRequired,
   videoDate: PropTypes.string.isRequired,
   videoDuration: PropTypes.string.isRequired,
+  onClickTumbnail: PropTypes.func.isRequired,
 };
 
 export default VideoThumbnail; 

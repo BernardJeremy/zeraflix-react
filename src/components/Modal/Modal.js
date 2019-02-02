@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   paper: {
@@ -28,20 +27,13 @@ const getModalStyle = () => {
 class SimpleModal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      open: false,
-    };
+    this.handleClose = this.handleClose.bind(this);
   }
 
-  handleOpen = () => {
-    if (this.props.onDisplay) {
-      this.props.onDisplay();
-    }
-    this.setState({ open: true });
-  };
-
   handleClose = () => {
-    this.setState({ open: false });
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
   };
 
   render() {
@@ -49,11 +41,10 @@ class SimpleModal extends React.Component {
 
     return (
       <div className="modal">
-        <Button onClick={this.handleOpen}>{this.props.buttonText}</Button>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={this.state.open}
+          open={this.props.open}
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
@@ -67,8 +58,8 @@ class SimpleModal extends React.Component {
 
 SimpleModal.propTypes = {
   classes: PropTypes.object.isRequired,
-  buttonText: PropTypes.string.isRequired,
-  onDisplay: PropTypes.func,
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func,
 };
 
 // We need an intermediary variable for handling the recursive nesting.
