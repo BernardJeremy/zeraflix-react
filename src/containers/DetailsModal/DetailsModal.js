@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
+import Typography from '@material-ui/core/Typography';
 
 import { toggleDetailsModal } from '../../actions/DetailsModal';
 
-import TwitchApi from '../../webservices/Twitch';
 import Modal from '../../components/Modal/Modal';
 
 
 class DetailsModal extends React.Component {
   componentDidMount() {
-    TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.name)
+   /* TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.name)
       .then(
         (result) => {
           //this.props.onVideosListUpdate(result.videos || []);
@@ -18,13 +18,18 @@ class DetailsModal extends React.Component {
         (error) => {
           // TODO
         }
-      );
+      );*/
   }
 
   render() {
     return (
       <Modal open={this.props.isDetailsModalOpen} onClose={this.props.toggleModal}>
-        Details HERE !
+        <Typography variant="h6" id="modal-title">
+          Choose a link (VLC or M3U8-Player)
+        </Typography>
+        <Typography variant="subtitle1" id="simple-modal-description">
+          Links here !
+        </Typography>
       </Modal>
     )
   }
