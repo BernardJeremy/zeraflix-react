@@ -2,7 +2,7 @@
   "name": "zeraflix-react",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://bernardjeremy.github.io/zeraflix-react",
+  "homepage": "https://zeraflix.bernard.sh",
   "dependencies": {
     "@material-ui/core": "^3.9.0",
     "gh-pages": "^2.0.1",
