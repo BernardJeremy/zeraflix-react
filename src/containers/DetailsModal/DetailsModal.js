@@ -30,7 +30,7 @@ class DetailsModal extends React.Component {
         </Typography>
         {this.props.videoLinksArray.map((linkData, i) => {
           return (
-            <p className="video-link">
+            <p key={i} className="video-link">
               <a href={linkData.url} target="_blank" rel="noopener noreferrer">
                 {linkData.type}
               </a>
