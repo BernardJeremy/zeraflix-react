@@ -15,6 +15,7 @@ export default function detailsModal(state = defaultState, action) {
       return {...state,
         isModalOpen: !state.isModalOpen,
         targetVideoUrl: action.targetVideoUrl || null,
+        videoLinksArray: [],
       };
     case UPDATE_CURRENT_VIDEO_LINKS:
       return {...state,
