@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 const VideoThumbnail = (props) => (
   <div className="grid" onClick={props.onClickTumbnail}>
     <div className="preview">
-      <a href={'#' + props.videoUrl}><img src={props.videoPreview} alt={props.videoLabel} /></a>
+      <img src={props.videoPreview} alt={props.videoLabel} />
       <div className="time">{props.videoDate}</div>
       <div className="duration">{props.videoDuration}</div>
     </div>
     <div className="data data-time">
-      <h3><a href={'#' + props.videoUrl}>{props.videoLabel}</a></h3>
+      <h3>{props.videoLabel}</h3>
     </div>
   </div>
 );
