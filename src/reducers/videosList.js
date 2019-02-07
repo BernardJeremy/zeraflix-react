@@ -1,6 +1,7 @@
 import {
   UPDATE_VIDEOS_LIST,
   UPDATE_CHANNEL_DATA,
+  UPDATE_CURRENT_OFFSET,
 } from '../actions/VideosList';
 
 const defaultState = {
@@ -9,6 +10,7 @@ const defaultState = {
     name: 'zerator',
     data: {},
   },
+  currentOffset: 0,
 };
 
 export default function videosList(state = defaultState, action) {
@@ -21,6 +23,9 @@ export default function videosList(state = defaultState, action) {
           data: action.channelData,
         }
       };
+    case UPDATE_CURRENT_OFFSET:
+      const newOffset = state.currentOffset + action.offsetModifier
+      return {...state, currentOffset: newOffset < 0 ? 0 : newOffset};
     default:
       return state
   }

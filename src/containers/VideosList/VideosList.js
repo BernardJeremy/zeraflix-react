@@ -10,19 +10,28 @@ import { toggleDetailsModal } from '../../actions/DetailsModal';
 import formatVideoData from '../../tools/formatVideoData';
 import TwitchApi from '../../webservices/Twitch';
 import DetailsModal from '../DetailsModal/DetailsModal';
+import Pagination from './Pagination/Pagination';
 
 
 class VideosList extends React.Component {
-  componentDidMount() {
-    TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.name)
-      .then(
-        (result) => {
-          this.props.onVideosListUpdate(result.videos || []);
-        },
-        (error) => {
-          // TODO
-        }
-      );
+  constructor(props) {
+    super(props);
+    this.state = {lastOffset: -1};
+  }
+  componentDidUpdate() {
+    if (this.state.lastOffset !== this.props.currentVideoOffset) {
+      console.log('componentDidMount');
+      this.setState({lastOffset: this.props.currentVideoOffset});
+      TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.name, this.props.currentVideoOffset)
+        .then(
+          (result) => {
+            this.props.onVideosListUpdate(result.videos || []);
+          },
+          (error) => {
+            // TODO
+          }
+        );
+    }
   }
 
   getDetailsModalDisplayer(videoUrl) {
@@ -49,6 +58,7 @@ class VideosList extends React.Component {
             })
           }
         </section>
+        <Pagination />
         {(() => {
           if (this.props.isDetailsModalOpen) {
             return (
@@ -66,6 +76,7 @@ const mapStateToProps = state => {
     videosArray: state.videosList.videosArray,
     currentTwitchChannel: state.videosList.currentTwitchChannel,
     isDetailsModalOpen: state.detailsModal.isModalOpen,
+    currentVideoOffset: state.videosList.currentOffset,
   }
 }
 
@@ -83,6 +94,8 @@ const mapDispatchToProps = dispatch => {
 VideosList.propTypes = {
   videosArray: PropTypes.array.isRequired,
   currentTwitchChannel: PropTypes.object.isRequired,
+  isDetailsModalOpen: PropTypes.bool.isRequired,
+  currentVideoOffset: PropTypes.number.isRequired,
 }
 
 const VideosListContainer = connect(

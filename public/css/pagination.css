@@ -33,7 +33,7 @@
   -webkit-box-shadow: 0 1px rgba(255, 255, 255, 0.05);
   box-shadow: 0 1px rgba(255, 255, 255, 0.05);
 }
-.pagination > a, .pagination > span {
+.pagination > button, .pagination > span {
   float: left;
   margin-left: 5px;
   padding: 0 6px;
@@ -51,7 +51,7 @@
 .pagination :first-child {
   margin-left: 0;
 }
-.pagination > a {
+.pagination > button {
   text-decoration: none;
   text-shadow: 0 1px black;
   background-clip: padding-box;
@@ -67,8 +67,7 @@
   -o-transition: 0.1s ease-out;
   transition: 0.1s ease-out;
 }
-.pagination > a:hover {
-  background-color: #333;
+.pagination > button:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
 .pagination > span, .pagination > a:active {
@@ -82,15 +81,15 @@
 }
 .pagination .prev, .pagination .next {
   font-family: Noteworthy, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .pagination-blue {
   background-color: rgba(0, 5, 50, 0.1);
 }
-.pagination-blue > a {
+.pagination-blue > button {
   background-color: rgba(170, 170, 255, 0.01);
 }
-.pagination-blue > a.hover {
+.pagination-blue > button.hover {
   background-color: rgba(120, 130, 255, 0.08);
 }
