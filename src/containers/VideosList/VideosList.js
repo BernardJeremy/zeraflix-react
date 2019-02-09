@@ -9,7 +9,7 @@ import { toggleDetailsModal } from '../../actions/DetailsModal';
 
 import formatVideoData from '../../tools/formatVideoData';
 import TwitchApi from '../../webservices/Twitch';
-import DetailsModal from '../DetailsModal/DetailsModal';
+import DetailsModal from './DetailsModal/DetailsModal';
 import Pagination from './Pagination/Pagination';
 
 
