@@ -11,6 +11,7 @@ import formatVideoData from '../../tools/formatVideoData';
 import TwitchApi from '../../webservices/Twitch';
 import DetailsModal from './DetailsModal/DetailsModal';
 import Pagination from './Pagination/Pagination';
+import Footer from '../../components/Footer/Footer';
 
 
 class VideosList extends React.Component {
@@ -59,6 +60,7 @@ class VideosList extends React.Component {
           }
         </section>
         <Pagination />
+        <Footer appLabel="Zeraflix"/>
         {(() => {
           if (this.props.isDetailsModalOpen) {
             return (
