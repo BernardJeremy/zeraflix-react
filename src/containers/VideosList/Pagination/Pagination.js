@@ -17,12 +17,10 @@ class Pagination extends React.Component {
 
   render() {
     return (
-      <section className="container">
-        <nav className="pagination">
-          <button className="prev" onClick={() => this.onClickPrev()}>&lt;</button>
-          <button className="next" onClick={() => this.onClickNext()}>&gt;</button>
-        </nav>
-      </section>
+      <nav className="pagination">
+        <button className="prev" onClick={() => this.onClickPrev()}>&lt;</button>
+        <button className="next" onClick={() => this.onClickNext()}>&gt;</button>
+      </nav>
     )
   }
 }

@@ -5,32 +5,16 @@
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
-.container {
-  margin: 80px auto;
-  width: 400px;
-  text-align: center;
-}
-.container .pagination {
-  margin: 15px 0;
-}
 
 .pagination {
-  padding: 8px;
+  margin: 20px 356px;
+  text-align: center;
+  padding: 10px;
   background-clip: padding-box;
   border: 1px solid;
-  border-color: #070809 #0d0e0f #131517;
   border-color: rgba(0, 0, 0, 0.8) rgba(0, 0, 0, 0.65) rgba(0, 0, 0, 0.5);
   border-radius: 3px;
   display: inline-block;
-  vertical-align: baseline;
-  zoom: 1;
-  *display: inline;
-  *vertical-align: auto;
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0));
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0));
-  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0));
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0));
-  -webkit-box-shadow: 0 1px rgba(255, 255, 255, 0.05);
   box-shadow: 0 1px rgba(255, 255, 255, 0.05);
 }
 .pagination > button, .pagination > span {

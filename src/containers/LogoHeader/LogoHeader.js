@@ -30,7 +30,6 @@ class LogoHeader extends React.Component {
               }
             })()}
           </div>
-          <div className="clearFloat"></div>
         </header>
       </div>
     )

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const VideoThumbnail = (props) => (
-  <div className="grid" onClick={props.onClickTumbnail}>
+  <div className="grid-element" onClick={props.onClickTumbnail}>
     <div className="preview">
       <img src={props.videoPreview} alt={props.videoLabel} />
       <div className="time">{props.videoDate}</div>

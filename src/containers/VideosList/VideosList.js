@@ -21,7 +21,6 @@ class VideosList extends React.Component {
   }
   componentDidUpdate() {
     if (this.state.lastOffset !== this.props.currentVideoOffset) {
-      console.log('componentDidMount');
       this.setState({lastOffset: this.props.currentVideoOffset});
       TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.name, this.props.currentVideoOffset)
         .then(
@@ -42,8 +41,8 @@ class VideosList extends React.Component {
   render() {
     return (
       <section className="content">
-        <section className="part">
-          <h2>Zeraflix ({this.props.currentTwitchChannel.name})</h2>
+        <h2>Zeraflix ({this.props.currentTwitchChannel.name})</h2>
+        <section className="grid-wrapper">
           {
             this.props.videosArray.map((video, i) => {
               const formatedVideo = formatVideoData(video);
@@ -60,7 +59,6 @@ class VideosList extends React.Component {
           }
         </section>
         <Pagination />
-        <Footer appLabel="Zeraflix"/>
         {(() => {
           if (this.props.isDetailsModalOpen) {
             return (
@@ -68,6 +66,7 @@ class VideosList extends React.Component {
             )
           }
         })()}
+      <Footer appLabel="Zeraflix"/>
       </section>
     )
   }

@@ -14,5 +14,4 @@ Webapp made to retrieve Twitch past broadcast media links.
 - `REACT_APP_DECODER_API_HOST` : Host of API decoder, needed to retrieve media URL (see [zerafix-api](https://github.com/BernardJeremy/zeraflix-api) for example). 
 
 ## TO-DO
-- Fix CSS using css-grid.
 - Allow user to choose which Twitch channel to display.
