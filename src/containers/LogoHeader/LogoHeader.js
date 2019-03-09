@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 
-
 import { updateChannelData } from '../../actions/VideosList';
 import TwitchApi from '../../webservices/Twitch';
 
@@ -21,17 +20,15 @@ class LogoHeader extends React.Component {
 
   render() {
     return (
-      <div className="sidebar">
-        <header>
-          <div className="logo">
-            {(() => {
-              if (this.props.currentTwitchChannel.data.logo) {
-                return <img src={this.props.currentTwitchChannel.data.logo} alt='Zeraflix' />;
-              }
-            })()}
-          </div>
-        </header>
-      </div>
+      <header>
+        <div className="logo">
+          {(() => {
+            if (this.props.currentTwitchChannel.data.logo) {
+              return <img src={this.props.currentTwitchChannel.data.logo} alt='Zeraflix' />;
+            }
+          })()}
+        </div>
+      </header>
     )
   }
 }

@@ -33,6 +33,18 @@ header{
 	height: auto;
 }
 
+.form-input-channel {
+	width: 215px;
+}
+
+.input-channel {
+	width: 75%;
+}
+
+.submit-input-channel {
+	width: 23%;
+}
+
 .content{
 	padding: 0 20px 20px;
 	background:#fff;

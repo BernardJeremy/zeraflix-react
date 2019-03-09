@@ -20,8 +20,9 @@ class VideosList extends React.Component {
     this.state = {lastOffset: -1};
   }
   componentDidUpdate() {
-    if (this.state.lastOffset !== this.props.currentVideoOffset) {
-      this.setState({lastOffset: this.props.currentVideoOffset});
+    if (this.state.lastOffset !== this.props.currentVideoOffset ||
+      this.state.lastChannelName !== this.props.currentTwitchChannel.name) {
+      this.setState({lastOffset: this.props.currentVideoOffset, lastChannelName: this.props.currentTwitchChannel.name});
       TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.name, this.props.currentVideoOffset)
         .then(
           (result) => {
@@ -34,6 +35,10 @@ class VideosList extends React.Component {
     }
   }
 
+  getCurrentPageNumber() {
+    return (this.props.currentVideoOffset / 12) + 1;
+  }
+
   getDetailsModalDisplayer(videoUrl) {
     return () => this.props.toggleModal(videoUrl);
   }
@@ -41,7 +46,7 @@ class VideosList extends React.Component {
   render() {
     return (
       <section className="content">
-        <h2>Zeraflix ({this.props.currentTwitchChannel.name})</h2>
+        <h2>Zeraflix ({this.props.currentTwitchChannel.name}) - Page {this.getCurrentPageNumber()}</h2>
         <section className="grid-wrapper">
           {
             this.props.videosArray.map((video, i) => {
