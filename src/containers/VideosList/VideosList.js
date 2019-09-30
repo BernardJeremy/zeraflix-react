@@ -23,10 +23,10 @@ class VideosList extends React.Component {
     if (this.state.lastOffset !== this.props.currentVideoOffset ||
       this.state.lastChannelName !== this.props.currentTwitchChannel.name) {
       this.setState({lastOffset: this.props.currentVideoOffset, lastChannelName: this.props.currentTwitchChannel.name});
-      TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.name, this.props.currentVideoOffset)
+      TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.id, this.props.currentVideoOffset)
         .then(
           (result) => {
-            this.props.onVideosListUpdate(result.videos || []);
+            this.props.onVideosListUpdate(result || []);
           },
           (error) => {
             // TODO
@@ -53,7 +53,7 @@ class VideosList extends React.Component {
               const formatedVideo = formatVideoData(video);
               return <VideoThumbnail
                 videoUrl={formatedVideo.url}
-                videoPreview={formatedVideo.preview}
+                videoPreview={formatedVideo.thumbnail_url}
                 videoLabel={formatedVideo.title}
                 videoDate={formatedVideo.recorded_at}
                 videoDuration={formatedVideo.length}

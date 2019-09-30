@@ -18,13 +18,15 @@ export default function videosList(state = defaultState, action) {
     case UPDATE_VIDEOS_LIST:
       return {...state, videosArray: action.videosList};
     case UPDATE_CHANNEL_DATA:
-    console.log(action.channelData);
       return {...state,
         videosArray: defaultState.videosArray,
         currentOffset: defaultState.currentOffset,
         currentTwitchChannel: {
-          name: action.channelData.name,
-          data: action.channelData,
+          name: action.channelData.login,
+          id: action.channelData.id,
+          data: {
+            logo: action.channelData.profile_image_url,
+          },
         }
       };
     case UPDATE_CURRENT_OFFSET:
