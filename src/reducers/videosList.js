@@ -1,7 +1,6 @@
 import {
   UPDATE_VIDEOS_LIST,
   UPDATE_CHANNEL_DATA,
-  UPDATE_CURRENT_OFFSET,
 } from '../actions/VideosList';
 
 const defaultState = {
@@ -10,17 +9,22 @@ const defaultState = {
     name: 'zerator',
     data: {},
   },
-  currentOffset: 0,
+  paginationToken: '',
 };
 
 export default function videosList(state = defaultState, action) {
   switch (action.type) {
     case UPDATE_VIDEOS_LIST:
-      return {...state, videosArray: action.videosList};
+      if (!action.videosListData.data || !action.videosListData.pagination) {
+        return {...state};
+      }
+      return {...state, 
+        videosArray: action.videosListData.data,
+        paginationToken: action.videosListData.pagination.cursor,
+      };
     case UPDATE_CHANNEL_DATA:
       return {...state,
         videosArray: defaultState.videosArray,
-        currentOffset: defaultState.currentOffset,
         currentTwitchChannel: {
           name: action.channelData.login,
           id: action.channelData.id,
@@ -29,9 +33,6 @@ export default function videosList(state = defaultState, action) {
           },
         }
       };
-    case UPDATE_CURRENT_OFFSET:
-      const newOffset = state.currentOffset + action.offsetModifier
-      return {...state, currentOffset: newOffset < 0 ? 0 : newOffset};
     default:
       return state
   }

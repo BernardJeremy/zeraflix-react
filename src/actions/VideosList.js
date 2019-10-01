@@ -6,21 +6,14 @@ export const UPDATE_VIDEOS_LIST = 'UPDATE_VIDEOS_LIST';
 
 export const UPDATE_CHANNEL_DATA = 'UPDATE_CHANNEL_DATA';
 
-export const UPDATE_CURRENT_OFFSET = 'UPDATE_CURRENT_OFFSET';
-
-
 /*
  * action creators
  */
 
-export function updateVideosList(videosList) {
-  return { type: UPDATE_VIDEOS_LIST, videosList }
+export function updateVideosList(videosListData) {
+  return { type: UPDATE_VIDEOS_LIST, videosListData }
 };
 
 export function updateChannelData(channelData) {
   return { type: UPDATE_CHANNEL_DATA, channelData }
-};
-
-export function updateCurrentOffset(offsetModifier) {
-  return { type: UPDATE_CURRENT_OFFSET, offsetModifier }
 };

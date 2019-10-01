@@ -2,17 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 
-import { updateCurrentOffset } from '../../../actions/VideosList';
+import { updateVideosList } from '../../../actions/VideosList';
 
-const BASE_OFFSET = 12;
+import TwitchApi from '../../../webservices/Twitch';
 
 class Pagination extends React.Component {
-  onClickPrev() {
-    this.props.updateCurrentOffset(BASE_OFFSET * -1);
+  callTwitchUpdateVideoList(offsetType) {
+    TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.id, `${offsetType}=${this.props.paginationToken}`)
+      .then(
+        (result) => {
+          this.props.onVideosListUpdate(result || []);
+        },
+        (error) => {
+          // TODO
+        }
+      );
   }
-  
+
+  onClickPrev() {
+    this.callTwitchUpdateVideoList('before');
+  }
+
   onClickNext() {
-    this.props.updateCurrentOffset(BASE_OFFSET);
+    this.callTwitchUpdateVideoList('after');
   }
 
   render() {
@@ -27,21 +39,23 @@ class Pagination extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentOffset: state.videosList.currentOffset,
-  }
+    currentTwitchChannel: state.videosList.currentTwitchChannel,
+    paginationToken: state.videosList.paginationToken,
+  };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateCurrentOffset: offsetModifier => {
-      dispatch(updateCurrentOffset(offsetModifier));
-    }
+    onVideosListUpdate: videosData => {
+      dispatch(updateVideosList(videosData));
+    },
   }
 }
 
 Pagination.propTypes = {
-  currentOffset: PropTypes.number.isRequired,
-  updateCurrentOffset: PropTypes.func.isRequired,
+  currentTwitchChannel: PropTypes.object.isRequired,
+  paginationToken: PropTypes.string.isRequired,
+  onVideosListUpdate: PropTypes.func.isRequired,
 }
 
 const PaginationContainer = connect(

@@ -17,13 +17,12 @@ import Footer from '../../components/Footer/Footer';
 class VideosList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {lastOffset: -1};
+    this.state = {lastChannelId: -1};
   }
   componentDidUpdate() {
-    if (this.state.lastOffset !== this.props.currentVideoOffset ||
-      this.state.lastChannelName !== this.props.currentTwitchChannel.name) {
-      this.setState({lastOffset: this.props.currentVideoOffset, lastChannelName: this.props.currentTwitchChannel.name});
-      TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.id, this.props.currentVideoOffset)
+    if (this.state.lastChannelId !== this.props.currentTwitchChannel.id) {
+      this.setState({lastChannelId: this.props.currentTwitchChannel.id});
+      TwitchApi.getVideosListFromChannel(this.props.currentTwitchChannel.id)
         .then(
           (result) => {
             this.props.onVideosListUpdate(result || []);
@@ -35,10 +34,6 @@ class VideosList extends React.Component {
     }
   }
 
-  getCurrentPageNumber() {
-    return (this.props.currentVideoOffset / 12) + 1;
-  }
-
   getDetailsModalDisplayer(videoUrl) {
     return () => this.props.toggleModal(videoUrl);
   }
@@ -46,7 +41,7 @@ class VideosList extends React.Component {
   render() {
     return (
       <section className="content">
-        <h2>Zeraflix ({this.props.currentTwitchChannel.name}) - Page {this.getCurrentPageNumber()}</h2>
+        <h2>Zeraflix ({this.props.currentTwitchChannel.name})</h2>
         <section className="grid-wrapper">
           {
             this.props.videosArray.map((video, i) => {
@@ -82,7 +77,6 @@ const mapStateToProps = state => {
     videosArray: state.videosList.videosArray,
     currentTwitchChannel: state.videosList.currentTwitchChannel,
     isDetailsModalOpen: state.detailsModal.isModalOpen,
-    currentVideoOffset: state.videosList.currentOffset,
   }
 }
 
@@ -101,7 +95,6 @@ VideosList.propTypes = {
   videosArray: PropTypes.array.isRequired,
   currentTwitchChannel: PropTypes.object.isRequired,
   isDetailsModalOpen: PropTypes.bool.isRequired,
-  currentVideoOffset: PropTypes.number.isRequired,
 }
 
 const VideosListContainer = connect(

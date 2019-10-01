@@ -12,6 +12,3 @@ Webapp made to retrieve Twitch past broadcast media links.
 ## Environnements configuration
 - `REACT_APP_TWITCH_CLIENT_ID` : Twitch client_id, needed to use Twitch API.
 - `REACT_APP_DECODER_API_HOST` : Host of API decoder, needed to retrieve media URL (see [zerafix-api](https://github.com/BernardJeremy/zeraflix-api) for example). 
-
-## TODO
-- Refactoring VideosList container : componentDidUpdate & offset management
